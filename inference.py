@@ -19,9 +19,6 @@ img_transform = standard_transforms.Compose([
 
 
 def infer(imgname, model):
-    # os.environ['KMP_DUPLICATE_LIB_OK']='True'
-    # os.environ["OMP_NUM_THREADS"] = "4"
-    # os.environ["MKL_NUM_THREADS"] = "4"
 
     try:
         net = CrowdCounter(model_name = model)
@@ -41,25 +38,10 @@ def infer(imgname, model):
         print(e)
         raise Exception
 
-    # print("CPU Threads : ", torch.get_num_threads())
-    # torch.set_num_threads(4)
-    # print("CPU Threads are now : ", torch.get_num_threads())
-
     if img.mode == 'L':
             img = img.convert('RGB')
 
     print("IMAGE SIZE is :", img.size)
-
-    # wd_1, ht_1 = img.size
-    # if wd_1 < cfg.DATA.INPUT_SIZE[1]:
-    #         dif = cfg.DATA.INPUT_SIZE[1] - wd_1
-    #         img = ImageOps.expand(img, border=(0,0,dif,0), fill=0)
-            
-    # if ht_1 < cfg.DATA.INPUT_SIZE[0]:
-    #     dif = cfg.DATA.INPUT_SIZE[0] - ht_1
-    #     img = ImageOps.expand(img, border=(0,0,0,dif), fill=0)
-
-    # print("Modified IMAGE SIZE is :", img.size)
 
     img = img_transform(img)
     with torch.no_grad():
@@ -79,10 +61,6 @@ def infer(imgname, model):
     plt.savefig(f'{imgname}:-'+str(int(prediction))+"::"+model+'.png')
 
 if __name__ == '__main__':
-    model = "CSRNet"
+    model = "SFCN"
     imgpath ="test_images/test.jpg"
     infer(imgpath, model)
-
- 
-#export NUM_CORES=4
-#export MKL_NUM_THREADS=$NUM_CORES OMP_NUM_THREADS=$NUM_CORES
