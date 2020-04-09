@@ -5,13 +5,11 @@ import torch
 from .layers import Gaussianlayer
 from .SCAR import SCAR
 from .CSRNet import CSRNet
-from .CANNet import CANNet
 from .MCNN import MCNN
 import os
 
 models = {"SCAR": [SCAR, 'pre/SCAR.pth'],
-            "CSRNet": [CSRNet, "pre/CSRNet.pth"],
-            "CANNet":[CANNet, "pre/CANNet.pth"],
+            "CSRNet": [CSRNet, "pre/CSRNet2.pth"],
             "MCNN":[MCNN, "pre/MCNN.pth"]
             }
 
@@ -19,9 +17,10 @@ models = {"SCAR": [SCAR, 'pre/SCAR.pth'],
 class CrowdCounter(nn.Module):
     def __init__(self, model_name):
         super(CrowdCounter, self).__init__()  
-        ccnet, model_weight_path = models[model_name]    
+        ccnet, model_weight_path = models[model_name]
         self.CCN = ccnet()
-        self.gs = Gaussianlayer()
+        if model_name != "CSRNet":
+            self.gs = Gaussianlayer()
         self.model_weight_path = model_weight_path
         print("LOADED MODEL")
 
