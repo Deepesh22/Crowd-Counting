@@ -137,4 +137,4 @@ dmypy.json
 #vscode
 .vscode
 *.DSStore
-pre
+*.pth
