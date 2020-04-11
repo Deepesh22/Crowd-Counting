@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+  <meta charset="utf-8">
+  <title>Crowd Counter</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link href={{url_for('static',filename = 'css/flexslider.min.css')}} rel="stylesheet" type="text/css" media="all" />
+  <link href={{url_for('static',filename ="css/line-icons.min.css")}} rel="stylesheet" type="text/css" media="all" />
+  <link href={{url_for('static',filename ="css/elegant-icons.min.css")}} rel="stylesheet" type="text/css" media="all" />
+  <link href={{url_for('static',filename ="css/lightbox.min.css")}} rel="stylesheet" type="text/css" media="all" />
+  <link href={{url_for('static',filename ="css/bootstrap.min.css")}} rel="stylesheet" type="text/css" media="all" />
+  <link href={{url_for('static',filename ="css/theme.css")}} rel="stylesheet" type="text/css" media="all" />
+  <link href={{url_for('static',filename = 'css/preview.css')}} rel="stylesheet" type="text/css" media="all" />
+
+  <!-- <link href={{url_for('static',filename ="css/bootstrap.min.css")}} rel="stylesheet" type="text/css" media="all"/> -->
+
+  <!--[if gte IE 9]>
+        	<link rel="stylesheet" type="text/css" href="css/ie9.css" />
+		<![endif]-->
+  <script src={{url_for('static',filename ="js/modernizr-2.6.2-respond-1.1.0.min.js")}}></script>
+  <script>
+    var element = document.getElementById("content");
+    element.classList.remove("loader");
+  </script>
+</head>
+
+<body >
+
+
+  <div class="container" style="background-color: #434c50;">
+    <center>
+      <h1>Result and Image Preview</h1>
+    </center>
+
+    <hr>
+
+    <center>
+      <span style="color: cornsilk;">
+        Approximate people <span style="font-size: x-large;">{{ count }}</span> detected
+      </span>
+    </center>
+
+    <div class="hover15 row " style="margin-top: 25px;">
+        <div class="row-content col-sm-6 col-12">
+          <div><img src={{url_for('static',filename = original)}}></div>
+          <span style="
+          color: cornsilk;
+      ">Image</span>
+        </div>
+
+        <div class="row-content col-12 col-sm-6">
+          <div>
+            <img src={{url_for('static',filename = newimg)}}>
+          </div>
+          <span style="color: cornsilk;">Result</span>
+        </div>
+    </div>
+
+    <div>
+      <br>
+      <a href={{url_for('static',filename = newimg)}} download><button class="btn btn-primary">Download</button></a>
+      <a href="upload"><button class="btn btn-primary">Try on some more!!!</button></a>
+    </div>
+  </div>
+
+
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src={{url_for('static',filename ="js/jquery.min.js")}}></script>
+  <script src={{url_for('static',filename ="js/jquery.plugin.min.js")}}></script>
+  <script src={{url_for('static',filename ="js/bootstrap.min.js")}}></script>
+  <script src={{url_for('static',filename ="js/jquery.flexslider-min.js")}}></script>
+  <script src={{url_for('static',filename ="js/smooth-scroll.min.js")}}></script>
+  <script src={{url_for('static',filename ="js/skrollr.min.js")}}></script>
+  <script src={{url_for('static',filename ="js/spectragram.min.js")}}></script>
+  <script src={{url_for('static',filename ="js/scrollReveal.min.js")}}></script>
+  <script src={{url_for('static',filename ="js/isotope.min.js")}}></script>
+  <script src={{url_for('static',filename ="js/twitterFetcher_v10_min.js")}}></script>
+  <script src={{url_for('static',filename ="js/lightbox.min.js")}}></script>
+  <script src={{url_for('static',filename ="js/jquery.countdown.min.js")}}></script>
+  <script src="js/scripts.js"></script>
+</body>
+
+</html>

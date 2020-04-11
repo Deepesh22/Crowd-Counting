@@ -14,7 +14,7 @@ models = {"SCAR": [SCAR, 'pre/SCAR.pth'],
             "CSRNet2": [CSRNet, "pre/CSRNet2.pth"],
             "CSRNet": [CSRNet, "pre/CSRNet.pth"],
             "MCNN":[MCNN, "pre/MCNN.pth"],
-            "SFCN":[Res101_SFCN, "pre/new.pth"]
+            "SFCN":[Res101_SFCN, "pre/SFCN.pth"]
             }
 
 
@@ -23,10 +23,10 @@ class CrowdCounter(nn.Module):
         super(CrowdCounter, self).__init__()  
         ccnet, model_weight_path = models[model_name]
         self.CCN = ccnet()
-        if model_name not in ["CSRNet", "CSRNet2", "SDCNet"] :
+        if model_name not in ["CSRNet2", "SDCNet"] :
             self.gs = Gaussianlayer()
         self.model_weight_path = model_weight_path
-        print("LOADED MODEL")
+        print(f"LOADED {model_name} MODEL")
 
     def test_forward(self, img):                               
         density_map = self.CCN(img)

@@ -1,0 +1,193 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<b><title>Crowd Counter</title></b>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<link rel="stylesheet" href="{{url_for('static',filename = 'assets/css/main.css')}}" />
+		<link href="{{url_for('static',filename = 'css/flexslider.min.css')}}" rel="stylesheet" type="text/css" media="all"/>
+        <link href='{{url_for("static",filename ="css/line-icons.min.css")}}' rel="stylesheet" type="text/css" media="all"/>
+        <link href='{{url_for("static",filename ="css/elegant-icons.min.css")}}' rel="stylesheet" type="text/css" media="all"/>
+        <link href='{{url_for("static",filename ="css/lightbox.min.css")}} ' rel="stylesheet" type="text/css" media="all"/>
+        <link href='{{url_for("static",filename ="css/bootstrap.min.css")}} 'rel="stylesheet" type="text/css" media="all"/>
+        <link href='{{url_for("static",filename ="css/theme.css")}}' rel="stylesheet" type="text/css" media="all"/>
+        <link href='{{url_for("static",filename ="css/custom.css")}}' rel="stylesheet" type="text/css" media="all"/>
+        <link href='{{url_for("static",filename ="css/uploadbox.css")}} 'rel="stylesheet" type="text/css" media="all"/>
+        <link href='{{url_for("static",filename ="css/uploadimage.css")}}' rel="stylesheet" type="text/css" media="all"/>
+        <link rel="stylesheet" href='{{"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"}}'>
+        <link href='{{"https://fonts.googleapis.com/css?family=Droid+Sans:400,700"}} rel="stylesheet"'>
+        <link rel="stylesheet" href='{{"https://rawgit.com/LeshikJanz/libraries/master/Bootstrap/baguetteBox.min.css"}}'>
+    
+    
+        <!--[if gte IE 9]>
+        	<link rel="stylesheet" type="text/css" href="css/ie9.css" />
+		<![endif]-->
+
+		<style>
+			input[type="submit"]{
+				background: white;
+				-webkit-transition: all .3s ease;
+				-moz-transition: all .3s ease;
+				transition: all .3s ease;
+				min-width: 155px;
+				border-radius: 25px;
+				display: inline-block;
+				padding: 14px 28px 13px 28px;
+				line-height: 1;
+				border: 2px solid crimson;
+				color: #ffffff;
+				max-width: 155px;
+				font-family: "Raleway", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+				font-weight: bold;
+				font-size: 11px;
+				text-transform: uppercase;
+				letter-spacing: 1px;
+			}
+
+			button, input, optgroup, select, textarea {
+			margin: 0;
+			font: inherit;
+			color: #fff;
+			}	
+			input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="search"], input[type="url"], select, textarea {
+			background-color: rgba(0, 0, 0, 0.075);
+			border-color: #8a6d3b;
+			}	
+			body {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: cornsilk;
+    background-color: #fff;
+}
+			</style>
+  </head>
+	<body>
+
+		<!-- Header -->
+		<link href={{url_for('static',filename = 'css/custom.css')}} rel="stylesheet" type="text/css" media="all"/>
+
+		<!-- Nav -->
+	
+
+		<!-- Banner -->
+			<section id="banner">
+				<div class="inner">
+					<h1>Crowd Counter</h1>
+					
+				</div>
+				<video autoplay loop muted playsinline src="{{url_for('static',filename = 'assets/images/video.mp4')}}"></video>
+			</section>
+
+		<!-- Highlights -->
+			<div class="container">
+					<form method = POST action="result" enctype = "multipart/form-data">
+						<div class="container">
+							<div class="wrapper">
+								<div class="box">
+									<div class="js--image-preview"></div>
+									<div class="upload-options">
+									<label>
+										<input type="file" class="image-upload" name="photos" accept="image/*" required placeholder="select an image to denoise it"/>
+									</label>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-xs-12">
+								<center>
+									<p>Select Choice of Algorithm:</p>
+									  <select class="" name = "algo" id='o'>
+										  {% for model in models %}
+										  	<option value = {{ model }} selected>{{ model }}</option>
+										  {% endfor %}
+									  </select>
+									</center>
+							</div>
+							<div class="col-xs-12">
+								<center>
+									<input type="submit" class="button button1">
+								</center>
+							</div>
+						</div>
+					  </form>
+				  
+			</div>
+
+		<!-- CTA -->
+    <div class="container gallery-container">
+
+        <h1>Sample Gallery</h1>
+    
+        <p class="page-description text-center">Results of the algorithms on sample images</p>
+        
+        <div class="tz-gallery">
+    
+            <div class="row">
+				<center>
+					<div class="col-sm-12 col-md-12">
+						<img src="{{url_for('static',filename ='assets/test.jpg')}} " alt="Original">
+					</div>
+				</center>
+			<div>
+				
+				<hr>
+
+                <div class="col-sm-4 col-md-3">
+						<span>Density map by SCAR</span>
+						<img src="{{url_for('static',filename ='assets/test.jpg:-72::SCAR.png')}}" alt="Cleared">
+				</div>
+				<div class="col-sm-4 col-md-3">
+					<span>Density map by SFCN</span>
+					<img src="{{url_for('static',filename ='assets/test.jpg:-65::SFCN.png')}}" alt="Cleared">
+				</div>
+				<div class="col-sm-4 col-md-3">
+					<span>Density map by MCNN</span>
+					<img src="{{url_for('static',filename ='assets/test.jpg:-40::MCNN.png')}}" alt="Cleared">
+				</div>
+				<div class="col-sm-4 col-md-3">
+					<span>Density map by CSRNet</span>
+					<img src="{{url_for('static',filename ='assets/test.jpg:-67::CSRNet.png')}}" alt="Cleared">
+				</div>
+            </div>
+    
+        </div>
+    
+    </div>
+    <script src={{"https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"}}></script>
+    <script>
+        baguetteBox.run('.tz-gallery');
+    </script>
+    
+          
+
+		
+	
+
+		<!-- Scripts -->
+			<script src="{{url_for('static',filename = 'assets/js/jquery.min.js')}}"></script>
+			<script src="{{url_for('static',filename = 'assets/js/browser.min.js')}}"></script>
+			<script src="{{url_for('static',filename = 'assets/js/breakpoints.min.js')}}"></script>
+			<script src="{{url_for('static',filename = 'assets/js/util.js')}}"></script>
+			<script src="{{url_for('static',filename = 'assets/js/main.js')}}"></script>
+			<script src='{{url_for("static",filename ="js/uploadimage.js")}}'></script>
+			<script src='{{url_for("static",filename ="js/scripts.js")}}'></script>
+			<script src='{{url_for("static",filename ="js/jquery.min.js")}}'></script>
+				<script src='{{url_for("static",filename ="js/jquery.plugin.min.js")}}'></script>
+				<script src='{{url_for("static",filename ="js/bootstrap.min.js")}}'></script>
+				<script src='{{url_for("static",filename ="js/jquery.flexslider-min.js")}}'></script>
+				<script src='{{url_for("static",filename ="js/smooth-scroll.min.js")}}'></script>
+				<script src='{{url_for("static",filename ="js/skrollr.min.js")}}'></script>
+				<script src='{{url_for("static",filename ="js/spectragram.min.js")}}'></script>
+				<script src='{{url_for("static",filename ="js/scrollReveal.min.js")}}'></script>
+				<script src='{{url_for("static",filename ="js/isotope.min.js")}}'></script>
+				<script src='{{url_for("static",filename ="js/twitterFetcher_v10_min.js")}}'></script>
+				<script src='{{url_for("static",filename ="js/lightbox.min.js")}}'></script>
+				<script src='{{url_for("static",filename ="js/jquery.countdown.min.js")}}'></script>
+		
+
+  </body>
+</html>
