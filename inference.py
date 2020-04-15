@@ -23,6 +23,7 @@ img_transform = standard_transforms.Compose([
 class Infer:
 
     def __init__(self, gpu = False):
+        print(gpu)
         print("LOADING MODELS INSTANCE")
         
         self.models = dict()
@@ -39,7 +40,9 @@ class Infer:
 
         for model in models.keys():
             try:
-                net = CrowdCounter(model_name = model)
+                net = CrowdCounter(model, gpu)
+                if gpu:
+                    net.cuda()
                 net.load_state_dict(torch.load(net.model_weight_path, map_location = location))
                 print(f"LOADED {model} WEIGHTS")
                 self.models[model] = net

@@ -19,12 +19,16 @@ models = {"SCAR": [SCAR, 'pre/SCAR.pth'],
 
 
 class CrowdCounter(nn.Module):
-    def __init__(self, model_name):
+    def __init__(self, model_name, use_gpu = False):
         super(CrowdCounter, self).__init__()  
         ccnet, model_weight_path = models[model_name]
         self.CCN = ccnet()
         if model_name not in ["CSRNet2", "SDCNet"] :
             self.gs = Gaussianlayer()
+            if use_gpu:
+                self.gs = self.gs.cuda()
+        if use_gpu:
+            self.CCN = self.CCN.cuda()
         self.model_weight_path = model_weight_path
         print(f"LOADED {model_name} MODEL")
 
