@@ -23,7 +23,7 @@ img_transform = standard_transforms.Compose([
 class Infer:
 
     def __init__(self, gpu = False):
-        print(gpu)
+        # print(gpu)
         print("LOADING MODELS INSTANCE")
         
         self.models = dict()
