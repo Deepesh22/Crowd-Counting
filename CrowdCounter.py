@@ -2,6 +2,7 @@ import os
 from flask import Flask, flash, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
 import json
+from argparse import ArgumentParser
 
 #***************************************************To process IMAGE******************************************************************#
 from inference import Infer
@@ -10,7 +11,6 @@ from inference import Infer
 #***************************************************WEB APP******************************************************************#
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
-CrowdCount = Infer()
 
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -58,4 +58,8 @@ def upload_file():
 
 if __name__ == "__main__":
 	app.secret_key = os.urandom(24)
+	parser = ArgumentParser()
+	parser.add_argument("--use_gpu", help="use gpu or not", nargs="?", default=False, const=True, type = bool)
+	args = parser.parse_args()
+	CrowdCount = Infer(args.use_gpu)
 	app.run(host = "0.0.0.0", port=8000, debug =True)

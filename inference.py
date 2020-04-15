@@ -22,15 +22,25 @@ img_transform = standard_transforms.Compose([
 
 class Infer:
 
-    def __init__(self):
+    def __init__(self, gpu = False):
         print("LOADING MODELS INSTANCE")
         
         self.models = dict()
+        self.use_gpu = gpu
+
+        if gpu:
+            device = torch.device("cuda")
+            location = "cuda:0"
+            print("RUNNING ON GPU INSTANCE")
+        else:
+            device = torch.device("cpu")
+            location = "cpu"
+            print("RUNNING ON CPU INSTANCE")
 
         for model in models.keys():
             try:
                 net = CrowdCounter(model_name = model)
-                net.load_state_dict(torch.load(net.model_weight_path, map_location="cpu"))
+                net.load_state_dict(torch.load(net.model_weight_path, map_location = location))
                 print(f"LOADED {model} WEIGHTS")
                 self.models[model] = net
             except Exception as e:
@@ -60,10 +70,15 @@ class Infer:
 
         img = img_transform(img)
         with torch.no_grad():
-            img = Variable(img[None,:,:,:])
+            if self.use_gpu:
+                img = Variable(img[None,:,:,:]).cuda()
+            else:
+                img = Variable(img[None,:,:,:])
             print("STARTING INFERENCE")
             start = time.time()
             pred_map = net.test_forward(img)
+            if self.use_gpu:
+                pred_map = pred_map.cpu()
             end = time.time()
             print("Inference took ", end-start, "seconds")
             
