@@ -10,9 +10,13 @@ This computer vision task which is a part of crowd analysis is very handy in man
 
 # To run 
 
+- Install Dependencies
+
 ```bash
 pip insall -r requirements.txt
 ```
+
+- run flask app
 
 ```bash
 python CrowdCounter.py
