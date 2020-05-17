@@ -21,13 +21,28 @@ img_transform = standard_transforms.Compose([
 
 
 class Infer:
+    def getAvailableModelsAndDevices(self):
 
-    def __init__(self, gpu = False):
-        # print(gpu)
-        print("LOADING MODELS INSTANCE")
+        print("LOADING LIST OF AVAILABLE MODELS INSTANCE...")
         
-        self.models = dict()
-        self.use_gpu = gpu
+        availabeModels = list()
+
+        for model in models.keys():
+            try:
+                net = CrowdCounter(model)
+                net.load_state_dict(torch.load(net.model_weight_path, map_location = "cpu"))
+                print(f"LOADED {model} WEIGHTS")
+                availabeModels.append(model)
+            except Exception as e:
+                print(f"Couldn't load weights of {model}")
+                print(e)
+
+        AVAILABLE_DEVICES = ['cpu']
+        if torch.cuda.is_available():
+            AVAILABLE_DEVICES.append('gpu')
+        return availabeModels, AVAILABLE_DEVICES
+
+    def infer(self, imgname, model, gpu):
 
         if gpu:
             device = torch.device("cuda")
@@ -38,24 +53,11 @@ class Infer:
             location = "cpu"
             print("RUNNING ON CPU INSTANCE")
 
-        for model in models.keys():
-            try:
-                net = CrowdCounter(model, gpu)
-                if gpu:
-                    net.cuda()
-                net.load_state_dict(torch.load(net.model_weight_path, map_location = location))
-                print(f"LOADED {model} WEIGHTS")
-                self.models[model] = net
-            except Exception as e:
-                print(f"Couldn't load weights of {model}")
-                print(e)
-
-    def getAvailableModels(self):
-        return list(self.models.keys())
-
-    def infer(self, imgname, model):
-
-        net = self.models[model]
+        net = CrowdCounter(model, gpu)
+        if gpu:
+            net.cuda()
+        net.load_state_dict(torch.load(net.model_weight_path, map_location = location))
+        print(f"LOADED {model} WEIGHTS")
 
         net.eval()
 
@@ -73,14 +75,14 @@ class Infer:
 
         img = img_transform(img)
         with torch.no_grad():
-            if self.use_gpu:
+            if gpu:
                 img = Variable(img[None,:,:,:]).cuda()
             else:
                 img = Variable(img[None,:,:,:])
             print("STARTING INFERENCE")
             start = time.time()
             pred_map = net.test_forward(img)
-            if self.use_gpu:
+            if gpu:
                 pred_map = pred_map.cpu()
             end = time.time()
             print("Inference took ", end-start, "seconds")
@@ -97,4 +99,4 @@ class Infer:
 if __name__ == '__main__':
     model = "MCNN"
     imgpath ="test_images/word-image.jpeg"
-    Infer().infer(imgpath, model)
+    Infer().infer(imgpath, model, False)

@@ -102,7 +102,17 @@
 									<p>Select Choice of Algorithm:</p>
 									  <select class="" name = "algo" id='o'>
 										  {% for model in models %}
-										  	<option value = {{ model }} selected>{{ model }}</option>
+										  	<option value = {{ model }}>{{ model }}</option>
+										  {% endfor %}
+									  </select>
+									</center>
+							</div>
+							<div class="col-xs-12">
+								<center>
+									<p>Select Device</p>
+									  <select class="" name = "device">
+										  {% for device in devices %}
+										  	<option value = {{ device }} >{{ device }}</option>
 										  {% endfor %}
 									  </select>
 									</center>
